@@ -10,16 +10,26 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!recaptchaToken) return alert("Complete the reCAPTCHA");
+    console.log("reCAPTCHA Token:", recaptchaToken); // Debugging
+
+    if (!recaptchaToken) {
+      alert("Complete the reCAPTCHA");
+      return;
+    }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/register", { ...formData, recaptchaToken });
+      const res = await axios.post("http://localhost:5000/api/auth/register", {
+        ...formData,
+        recaptchaToken,
+      });
       alert("Registration Successful!");
       localStorage.setItem("token", res.data.token);
     } catch (err) {
+      console.error("Registration Error:", err.response?.data);
       alert(err.response?.data?.message || "Registration failed");
     }
   };
+
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -68,7 +78,7 @@ const Register = () => {
           />
         </div>
         <div className="mb-6">
-          <ReCAPTCHA sitekey="YOUR_RECAPTCHA_SITE_KEY" onChange={(token) => setRecaptchaToken(token)} />
+          <ReCAPTCHA sitekey="6LeXyfMqAAAAAMnC-e4nhAns-PDHq4pidFPTHgwP" onChange={(token) => setRecaptchaToken(token)} />
         </div>
         <button
           type="submit"
@@ -80,5 +90,4 @@ const Register = () => {
     </div>
   );
 };
-
 export default Register;

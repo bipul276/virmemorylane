@@ -8,7 +8,7 @@ import Register from "../components/Register";
 
 const Home = () => {
   const [location, setLocation] = useState(null);
-  const [years, setYears] = useState("all"); // default value
+  const [years, setYears] = useState("all");
   const [memory, setMemory] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState("login");
@@ -28,12 +28,11 @@ const Home = () => {
     }
   };
 
-  // Automatically fetch memory when location or years change.
+  // Auto-fetch memory when location or years changes.
   useEffect(() => {
     if (location) {
       fetchMemory();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location, years]);
 
   const handleAuthClick = (mode) => {
@@ -43,11 +42,7 @@ const Home = () => {
 
   return (
     <div className="relative">
-      <Navbar
-        onAuthClick={handleAuthClick}
-        setLocation={setLocation}
-        fetchMemory={fetchMemory}  // Optional: if you want to trigger fetch manually as well
-      />
+      <Navbar onAuthClick={handleAuthClick} setLocation={setLocation} />
       <Hero />
       {/* Filter button in top right corner (below navbar) */}
       <div className="absolute right-6 top-24 z-40">
@@ -71,14 +66,14 @@ const Home = () => {
           </div>
         )}
       </div>
-      {/* Main content container with id for scrolling */}
+      {/* Main content container */}
       <div id="explore-section" className="container mx-auto p-6 pt-32">
         <ImageViewer memory={memory} />
       </div>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {authMode === "login" ? (
           <>
-            <Login />
+            <Login onClose={() => setIsModalOpen(false)} />
             <p className="mt-4 text-center">
               Don't have an account?{" "}
               <span
@@ -91,7 +86,7 @@ const Home = () => {
           </>
         ) : (
           <>
-            <Register />
+            <Register onClose={() => setIsModalOpen(false)} />
             <p className="mt-4 text-center">
               Already have an account?{" "}
               <span

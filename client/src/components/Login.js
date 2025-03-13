@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ onClose }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post("http://localhost:5000/api/auth/login", formData);
       localStorage.setItem("token", res.data.token);
-      // Redirect or update UI after login, as needed.
-      alert("Logged in successfully!");
+      if (onClose) onClose(); // Close modal if onClose callback is provided
+      navigate("/");           // Redirect to home page
+      window.location.reload(); // Force reload so Navbar updates with logged-in state
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
     }
