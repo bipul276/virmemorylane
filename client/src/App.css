@@ -1,0 +1,61 @@
+/* App.css */
+
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: #f0f2f5;
+    color: #333;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .header {
+    background-color: #0056b3;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+  }
+
+  .button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .button:hover {
+    background-color: #0056b3;
+  }
+
+  .inputField {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .formGroup {
+    margin-bottom: 20px;
+  }
+
+  .imageContainer {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .imageContainer img {
+    max-width: 100%;
+    height: auto;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+  }
