@@ -1,0 +1,72 @@
+# ==========================
+# 🌟 General System Files
+# ==========================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+
+# ==========================
+# 🌟 Node.js Dependencies
+# ==========================
+node_modules/
+npm-debug.log
+yarn.lock
+pnpm-lock.yaml
+package-lock.json
+
+# ==========================
+# 🌟 Environment Variables
+# ==========================
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# ==========================
+# 🌟 Logs & Temp Files
+# ==========================
+logs/
+*.log
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# ==========================
+# 🌟 Backend (Express.js & MongoDB)
+# ==========================
+/server/dist/
+/server/build/
+/server/coverage/
+dump.rdb
+*.sqlite
+*.db
+*.sql
+
+# ==========================
+# 🌟 Frontend (React / Next.js)
+# ==========================
+/client/build/
+/client/.next/
+/client/out/
+/client/public/static/
+/client/.cache/
+/client/coverage/
+
+# ==========================
+# 🌟 Docker (If using)
+# ==========================
+docker-compose.override.yml
+
+# ==========================
+# 🌟 Deployment & Misc
+# ==========================
+.vercel/
+.netlify/
+firebase.json
+
