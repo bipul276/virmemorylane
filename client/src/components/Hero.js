@@ -11,7 +11,7 @@ const Hero = () => {
   return (
     <section
       className="relative w-full h-[90vh] flex items-center justify-center bg-cover bg-center"
-      style={{ backgroundImage: "url('/path-to-your-background.jpg')" }}
+      style={{ backgroundImage: "url('/asset/landscape.jpg')" }}
     >
       <div className="absolute inset-0 bg-white bg-opacity-60"></div>
       <div className="relative text-center max-w-2xl">

@@ -1,7 +1,7 @@
 // routes/favorites.js
 const express = require("express");
 const router = express.Router();
-const auth = require("../middleware/auth");
+const auth = require("../middlewares/auth");
 const User = require("../models/User");
 
 // GET /api/favorites - fetch logged-in user's favorites
