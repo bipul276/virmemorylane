@@ -1,9 +1,8 @@
-// controllers/adminController.js
+/* // controllers/adminController.js
 const Memory = require("../models/Memory");
 
-exports.createMemory = async (req, res) => {
+const createMemory = async (req, res) => {
   const { lat, lng, years, mostRelatedImage, transformationDetails, info } = req.body;
-  // Validate required fields
   if (!lat || !lng || !years || !mostRelatedImage) {
     return res.status(400).json({ message: "Required fields missing" });
   }
@@ -22,3 +21,6 @@ exports.createMemory = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+module.exports = createMemory;
+ */

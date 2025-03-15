@@ -1,3 +1,4 @@
+// src/pages/Home.js
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
@@ -9,12 +10,12 @@ import Register from "../components/Register";
 const Home = () => {
   const [location, setLocation] = useState(null);
   const [years, setYears] = useState("all");
-  const [memory, setMemory] = useState(null);
+  const [memories, setMemories] = useState([]);  // should be an array
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState("login");
   const [showFilter, setShowFilter] = useState(false);
 
-  const fetchMemory = async () => {
+  const fetchMemories = async () => {
     if (!location) return alert("Select a location first");
     try {
       const response = await fetch(
@@ -22,16 +23,18 @@ const Home = () => {
       );
       if (!response.ok) throw new Error("Failed to fetch memory data");
       const data = await response.json();
-      setMemory(data);
+      console.log("Fetched memories:", data);
+      // Ensure data is an array:
+      setMemories(Array.isArray(data) ? data : [data]);
     } catch (error) {
       alert(error.message);
     }
   };
 
-  // Auto-fetch memory when location or years changes.
+  // Auto-fetch memories when location or years changes.
   useEffect(() => {
     if (location) {
-      fetchMemory();
+      fetchMemories();
     }
   }, [location, years]);
 
@@ -66,9 +69,17 @@ const Home = () => {
           </div>
         )}
       </div>
-      {/* Main content container */}
+      {/* Main content container: render each memory */}
       <div id="explore-section" className="container mx-auto p-6 pt-32">
-        <ImageViewer memory={memory} />
+        {memories.length === 0 ? (
+          <p className="text-center text-gray-600">No memories found.</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {memories.map((memory) => (
+              <ImageViewer key={memory._id} memory={memory} />
+            ))}
+          </div>
+        )}
       </div>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {authMode === "login" ? (

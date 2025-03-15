@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from "jwt-decode"; // Use default import
+import { Link } from 'react-router-dom';
 
 const Navbar = ({ onAuthClick, setLocation }) => {
   const [latInput, setLatInput] = useState("");
@@ -66,7 +67,7 @@ const Navbar = ({ onAuthClick, setLocation }) => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setUser(null);
-    // No reload here; since token is gone, on next mount (or re-render) the user will be logged out.
+    // Optionally, redirect to home
   };
 
   return (
@@ -75,15 +76,18 @@ const Navbar = ({ onAuthClick, setLocation }) => {
         <h1 className="text-xl font-bold text-orange-500">Virtual Memory Lane</h1>
         <ul className="hidden md:flex space-x-6">
           <li>
-            <a href="/" className="hover:text-orange-500">Home</a>
+            <Link to="/" className="hover:text-orange-500">Home</Link>
           </li>
           {user && (
             <>
               <li>
-                <a href="/profile" className="hover:text-orange-500">Profile</a>
+                <Link to="/profile" className="hover:text-orange-500">Profile</Link>
               </li>
               <li>
-                <a href="/favorites" className="hover:text-orange-500">Favorites</a>
+                <Link to="/favorites" className="hover:text-orange-500">Favorites</Link>
+              </li>
+              <li>
+                <Link to="/upload-memory" className="hover:text-orange-500">Upload Memory</Link>
               </li>
             </>
           )}
