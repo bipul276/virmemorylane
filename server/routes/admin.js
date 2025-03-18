@@ -1,9 +1,9 @@
-// routes/admin.js
 const express = require("express");
 const router = express.Router();
 const adminAuth = require("../middlewares/adminAuth");
-const User = require("../models/User");
 const Memory = require("../models/Memory");
+const User = require("../models/User");
+const { deleteImageFromFirebase } = require("../utils/firebaseUploader");
 
 // GET /api/admin/users - List all users (excluding passwords)
 router.get("/users", adminAuth, async (req, res) => {
@@ -39,12 +39,16 @@ router.get("/memories", adminAuth, async (req, res) => {
   }
 });
 
-// DELETE /api/admin/memories/:id - Delete a memory by id
+// DELETE /api/admin/memories/:id - Delete a memory (and its Firebase image) by id
 router.delete("/memories/:id", adminAuth, async (req, res) => {
   try {
     const deletedMemory = await Memory.findByIdAndDelete(req.params.id);
     if (!deletedMemory) return res.status(404).json({ message: "Memory not found" });
-    res.json({ message: "Memory deleted successfully" });
+
+    // Delete the associated image from Firebase Storage
+    await deleteImageFromFirebase(deletedMemory.mostRelatedImage);
+
+    res.json({ message: "Memory and associated image deleted successfully" });
   } catch (error) {
     console.error("Error deleting memory:", error);
     res.status(500).json({ message: "Server error" });

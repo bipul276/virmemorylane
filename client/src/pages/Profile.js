@@ -1,7 +1,6 @@
-// src/pages/Profile.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {jwtDecode} from "jwt-decode"; // default import
+import {jwtDecode} from "jwt-decode"; // Corrected import
 
 const Profile = () => {
   const [profile, setProfile] = useState({ username: "", email: "" });
@@ -126,17 +125,20 @@ const Profile = () => {
               {memories.map((memory) => (
                 <div key={memory._id} className="border p-4 rounded shadow">
                   <img
-                    src={`http://localhost:5000/${fixImagePath(memory.mostRelatedImage)}`}
+                    src={
+                        memory.mostRelatedImage.startsWith("uploads/")
+                        ? `http://localhost:5000/${fixImagePath(memory.mostRelatedImage)}`
+                        : memory.mostRelatedImage
+                    }
                     alt="Memory"
                     className="w-full h-auto object-cover"
-                  />
+                    />
                   <p className="mt-2 text-gray-800">
                     <span className="font-semibold">Location:</span> {memory.location.lat}, {memory.location.lng}
                   </p>
                   <p className="text-gray-800">
                     <span className="font-semibold">Date Taken:</span> {new Date(memory.dateTaken).toLocaleDateString()}
                   </p>
-                  {/* Optionally display details if needed */}
                 </div>
               ))}
             </div>

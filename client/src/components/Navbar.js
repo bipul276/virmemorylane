@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {jwtDecode} from "jwt-decode"; // Use default import
+import {jwtDecode} from 'jwt-decode'; // Corrected import
 import { Link } from 'react-router-dom';
 
 const Navbar = ({ onAuthClick, setLocation }) => {

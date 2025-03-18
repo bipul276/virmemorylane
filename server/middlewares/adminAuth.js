@@ -1,4 +1,3 @@
-// middlewares/adminAuth.js
 const jwt = require("jsonwebtoken");
 
 function adminAuth(req, res, next) {
@@ -6,7 +5,6 @@ function adminAuth(req, res, next) {
   if (!bearerHeader) {
     return res.status(401).json({ message: "Access Denied" });
   }
-  // Expect header format: "Bearer <token>"
   const parts = bearerHeader.split(" ");
   if (parts.length !== 2) {
     return res.status(401).json({ message: "Invalid Token Format" });

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import {jwtDecode} from "jwt-decode"; // Corrected import
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {jwtDecode} from "jwt-decode";
 
 const Login = ({ onClose }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -94,7 +94,6 @@ const Login = ({ onClose }) => {
       </h2>
 
       {!isForgotPassword ? (
-        /** LOGIN FORM */
         <form onSubmit={handleLoginSubmit} className="w-full relative">
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">
@@ -139,7 +138,6 @@ const Login = ({ onClose }) => {
           </button>
         </form>
       ) : (
-        /** FORGOT PASSWORD FORM */
         <form onSubmit={handlePasswordReset} className="w-full relative">
           <div className="mb-4">
             <label className="block text-gray-700 font-semibold mb-2">Email</label>
@@ -171,14 +169,14 @@ const Login = ({ onClose }) => {
                 placeholder="Enter OTP"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
                 required
-                onChange={(e) => setOtp(e.target.value)}
+                onChange={(e) => setFormData({ ...formData, otp: e.target.value })}
               />
               <input
                 type="password"
                 placeholder="Enter new password"
                 className="w-full px-4 py-2 border rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
                 required
-                onChange={(e) => setNewPassword(e.target.value)}
+                onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}
               />
               <button
                 type="submit"

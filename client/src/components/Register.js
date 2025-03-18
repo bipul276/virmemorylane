@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
-// Set API Base URL Dynamically
-const API_BASE_URL =
-  window.location.hostname === "localhost"
-    ? "http://localhost:5000"
-    : `http://${window.location.hostname}:5000`;
+// If token decoding is needed later, use the default import:
+// import jwtDecode from "jwt-decode";
 
 const Register = ({ onClose }) => {
   const [step, setStep] = useState(1); // 1 = Enter details, 2 = Verify OTP
@@ -33,7 +29,7 @@ const Register = ({ onClose }) => {
 
     setSendingOTP(true);
     try {
-      const res = await axios.post(`${API_BASE_URL}/api/auth/send-otp`, {
+      const res = await axios.post("http://localhost:5000/api/auth/send-otp", {
         email: formData.email,
       });
       setOtpSent(true);
@@ -54,7 +50,7 @@ const Register = ({ onClose }) => {
     }
 
     try {
-      const res = await axios.post(`${API_BASE_URL}/api/auth/register`, {
+      const res = await axios.post("http://localhost:5000/api/auth/register", {
         username: formData.username,
         email: formData.email,
         password: formData.password,
@@ -143,6 +139,7 @@ const Register = ({ onClose }) => {
                 placeholder="Enter OTP"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
                 required
+                value={formData.otp}
                 onChange={(e) => setFormData({ ...formData, otp: e.target.value })}
               />
             </div>

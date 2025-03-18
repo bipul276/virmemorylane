@@ -2,7 +2,7 @@ const otpStore = new Map();
 
 // Store OTP for a user (expires in 5 minutes)
 const setOTP = (identifier, otp) => {
-  otpStore.set(identifier, { otp, expires: Date.now() + 300000 }); // 5 minutes expiry
+  otpStore.set(identifier, { otp, expires: Date.now() + 300000 });
 };
 
 // Verify OTP and remove it if valid

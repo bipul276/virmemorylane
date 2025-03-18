@@ -1,4 +1,3 @@
-// routes/favorites.js
 const express = require("express");
 const router = express.Router();
 const auth = require("../middlewares/auth");
@@ -44,12 +43,10 @@ router.delete("/", auth, async (req, res) => {
     const user = await User.findById(req.user.userId);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // Filter out the favorite that matches location+imageUrl
     user.favorites = user.favorites.filter(
       (fav) => !(fav.location === location && fav.imageUrl === imageUrl)
     );
     await user.save();
-
     res.json(user.favorites);
   } catch (err) {
     console.error("Error deleting favorite:", err);

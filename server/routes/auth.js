@@ -1,4 +1,3 @@
-// src/routes/auth.js
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -32,7 +31,7 @@ router.post("/send-otp", async (req, res) => {
   }
 });
 
-// Verify OTP before registration or password reset
+// Verify OTP
 router.post("/verify-otp", (req, res) => {
   const { email, otp } = req.body;
   if (!email || !otp)
@@ -51,22 +50,18 @@ router.post("/verify-otp", (req, res) => {
 router.post("/register", async (req, res) => {
   const { username, email, password, otp } = req.body;
 
-  // Verify OTP before allowing registration
   if (!verifyOTP(email, otp)) {
     return res.status(400).json({ message: "Invalid OTP" });
   }
 
   try {
-    // Check if user already exists
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: "User already exists" });
 
-    // Hash the password and save user
     const hashedPassword = await bcrypt.hash(password, 10);
     user = new User({ username, email, password: hashedPassword });
     await user.save();
 
-    // Generate JWT Token (include isAdmin; defaults to false)
     const token = jwt.sign(
       { userId: user._id, username: user.username, email: user.email, isAdmin: user.isAdmin || false },
       process.env.JWT_SECRET,
@@ -84,39 +79,26 @@ router.post("/register", async (req, res) => {
       LOGIN (Users + Admin)
 ============================== */
 router.post("/login", async (req, res) => {
-  console.log("Request body:", req.body);
   const { email, password } = req.body;
-  console.log("Received login request for email:", email);
-
   if (!email || !password) {
-    console.log("Missing email or password");
     return res.status(400).json({ message: "Email and password required" });
   }
   try {
-    console.log("Using MONGO_URI:", process.env.MONGO_URI);
     const user = await User.findOne({ email });
-    console.log("User found:", user);
-
     if (!user) {
-      console.log("No user found with email:", email);
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log("Password match result:", isMatch);
-
     if (!isMatch) {
-      console.log("Password did not match for user:", email);
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    // Generate token with admin flag
     const token = jwt.sign(
       { userId: user._id, username: user.username, email: user.email, isAdmin: user.isAdmin },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
-    console.log("Token generated:", token);
 
     res.json({ token, isAdmin: user.isAdmin });
   } catch (error) {
