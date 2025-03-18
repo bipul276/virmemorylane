@@ -1,0 +1,11 @@
+[33mcommit 6c35bbc8dde244ca7cbb04bb5462976ddb41710a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: bipul276 <bipulnandan276@gmail.com>
+Date:   Tue Mar 18 12:04:03 2025 +0530
+
+    Remove serviceAccountKey.json from latest commit
+
+[33mcommit 9abbb23ae72723a018211c41e76b5df54c01fa0a[m
+Author: bipul276 <bipulnandan276@gmail.com>
+Date:   Tue Mar 18 10:54:40 2025 +0530
+
+    Made uploads global
