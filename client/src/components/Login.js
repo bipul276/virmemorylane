@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {jwtDecode} from "jwt-decode"; // Corrected import
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { API_BASE_URL } from "../config";
 const Login = ({ onClose }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
@@ -18,7 +18,7 @@ const Login = ({ onClose }) => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", formData, {
+      const res = await axios.post(`${API_BASE_URL}/api/auth/login`, formData, {
         headers: { "Content-Type": "application/json" },
       });
 
@@ -43,7 +43,7 @@ const Login = ({ onClose }) => {
   const sendOTP = async () => {
     setSendingOTP(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/forgot-password", {
+      const res = await axios.post(`${API_BASE_URL}/api/auth/forgot-password`, {
         email: formData.email,
       });
       setOtpSent(true);
@@ -64,7 +64,7 @@ const Login = ({ onClose }) => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/reset-password", {
+      const res = await axios.post(`${API_BASE_URL}/api/auth/reset-password`, {
         email: formData.email,
         otp,
         newPassword,

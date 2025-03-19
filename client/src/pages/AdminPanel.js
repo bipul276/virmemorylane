@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { API_BASE_URL } from "../config";
 const AdminPanel = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
@@ -16,7 +16,7 @@ const AdminPanel = () => {
     // Verify admin status
     const verifyAdmin = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/auth/verify-admin", {
+        const res = await axios.get(`${API_BASE_URL}/api/auth/verify-admin`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.data.isAdmin) {
@@ -30,7 +30,7 @@ const AdminPanel = () => {
     // Fetch all users (excluding passwords)
     const fetchUsers = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/users", {
+        const res = await axios.get(`${API_BASE_URL}/api/admin/users`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUsers(res.data);
@@ -43,7 +43,7 @@ const AdminPanel = () => {
     // Fetch all memories
     const fetchMemories = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/memories", {
+        const res = await axios.get(`${API_BASE_URL}/api/admin/memories`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setMemories(res.data);
@@ -61,11 +61,11 @@ const AdminPanel = () => {
   const handleDeleteUser = async (userId) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/admin/users/${userId}`, {
+        await axios.delete(`${API_BASE_URL}/api/admin/users/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setMessage("User deleted successfully");
-        const updated = await axios.get("http://localhost:5000/api/admin/users", {
+        const updated = await axios.get(`${API_BASE_URL}/api/admin/users`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUsers(updated.data);
@@ -79,11 +79,11 @@ const AdminPanel = () => {
   const handleDeleteMemory = async (memoryId) => {
     if (window.confirm("Are you sure you want to delete this memory?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/admin/memories/${memoryId}`, {
+        await axios.delete(`${API_BASE_URL}/api/admin/memories/${memoryId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setMessage("Memory deleted successfully");
-        const updated = await axios.get("http://localhost:5000/api/admin/memories", {
+        const updated = await axios.get(`${API_BASE_URL}/api/admin/memories`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setMemories(updated.data);
@@ -144,7 +144,7 @@ const AdminPanel = () => {
                 <img
                   src={
                     memory.mostRelatedImage.startsWith("uploads/")
-                      ? `http://localhost:5000/${memory.mostRelatedImage.replace(/\\/g, "/")}`
+                      ? `${API_BASE_URL}/${memory.mostRelatedImage.replace(/\\/g, "/")}`
                       : memory.mostRelatedImage
                   }
                   alt="Memory"

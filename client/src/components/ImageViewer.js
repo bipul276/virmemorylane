@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {jwtDecode} from "jwt-decode"; // Corrected import
 import axios from "axios";
-
+import { API_BASE_URL } from "../config";
 const ImageViewer = ({ memory }) => {
   const [favMessage, setFavMessage] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,7 +28,7 @@ const ImageViewer = ({ memory }) => {
         <img
           src={
             memory.mostRelatedImage.startsWith("uploads/")
-              ? `http://localhost:5000/${memory.mostRelatedImage}`
+              ? `${API_BASE_URL}/${memory.mostRelatedImage}`
               : memory.mostRelatedImage
           }
           alt="Historical"
@@ -48,7 +48,7 @@ const ImageViewer = ({ memory }) => {
                 location: `${memory.location.lat}, ${memory.location.lng}`,
                 imageUrl: memory.mostRelatedImage,
               };
-              await axios.post("http://localhost:5000/api/favorites", favoriteData, {
+              await axios.post(`${API_BASE_URL}/api/favorites`, favoriteData,  {
                 headers: { Authorization: `Bearer ${token}` },
               });
               setFavMessage("Added to favorites!");

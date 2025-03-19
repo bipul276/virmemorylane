@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {jwtDecode} from "jwt-decode"; // Corrected import
-
+import { API_BASE_URL } from "../config";
 const Profile = () => {
   const [profile, setProfile] = useState({ username: "", email: "" });
   const [editing, setEditing] = useState(false);
@@ -26,7 +26,7 @@ const Profile = () => {
     const fetchMemories = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/memories/my", {
+        const res = await axios.get(`${API_BASE_URL}/api/memories/my`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log("Fetched user memories:", res.data);
@@ -127,7 +127,7 @@ const Profile = () => {
                   <img
                     src={
                         memory.mostRelatedImage.startsWith("uploads/")
-                        ? `http://localhost:5000/${fixImagePath(memory.mostRelatedImage)}`
+                        ? `${API_BASE_URL}/${fixImagePath(memory.mostRelatedImage)}`
                         : memory.mostRelatedImage
                     }
                     alt="Memory"

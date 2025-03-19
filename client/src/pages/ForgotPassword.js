@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { API_BASE_URL } from "../config";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
@@ -12,7 +12,7 @@ const ForgotPassword = () => {
   // Step 1: Send OTP
   const sendOTP = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/forgot-password", { email });
+      const res = await axios.post(`${API_BASE_URL}/api/auth/forgot-password`, { email });
       alert(res.data.message);
       setStep(2);
     } catch (error) {
@@ -28,7 +28,7 @@ const ForgotPassword = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/reset-password", {
+      const res = await axios.post(`${API_BASE_URL}/api/auth/reset-password`, {
         email,
         otp,
         newPassword,

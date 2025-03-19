@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-
+import { API_BASE_URL } from '../config';
 const MemoryDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const MemoryDetails = () => {
   useEffect(() => {
     const fetchMemory = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/memories/${id}`);
+        const res = await axios.get(`${API_BASE_URL}/api/memories/${id}`);
         setMemory(res.data);
       } catch (err) {
         console.error("Error fetching memory:", err);
@@ -32,7 +32,7 @@ const MemoryDetails = () => {
     ) {
       // Remove any leading slash and prepend the backend URL
       const fixedPath = memory.mostRelatedImage.replace(/^\/?uploads\//, "uploads/");
-      imageUrl = `http://localhost:5000/${fixedPath}`;
+      imageUrl = `${API_BASE_URL}/${fixedPath}`;
     } else {
       imageUrl = memory.mostRelatedImage;
     }

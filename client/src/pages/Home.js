@@ -6,6 +6,7 @@ import ImageViewer from "../components/ImageViewer";
 import Modal from "../components/Modal";
 import Login from "../components/Login";
 import Register from "../components/Register";
+import { API_BASE_URL } from "../config";
 
 const Home = () => {
   const [location, setLocation] = useState(null);
@@ -19,7 +20,7 @@ const Home = () => {
     if (!location) return alert("Select a location first");
     try {
       const response = await fetch(
-        `/api/memories?lat=${location.lat}&lng=${location.lng}&years=${years}`
+        `${API_BASE_URL}/api/memories?lat=${location.lat}&lng=${location.lng}&years=${years}`
       );
       if (!response.ok) throw new Error("Failed to fetch memory data");
       const data = await response.json();

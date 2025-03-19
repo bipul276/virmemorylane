@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 // If token decoding is needed later, use the default import:
 // import jwtDecode from "jwt-decode";
 
@@ -29,7 +30,7 @@ const Register = ({ onClose }) => {
 
     setSendingOTP(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/send-otp", {
+      const res = await axios.post(`${API_BASE_URL}/api/auth/send-otp`, {
         email: formData.email,
       });
       setOtpSent(true);
@@ -50,7 +51,7 @@ const Register = ({ onClose }) => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/register", {
+      const res = await axios.post(`${API_BASE_URL}/api/auth/register`, {
         username: formData.username,
         email: formData.email,
         password: formData.password,

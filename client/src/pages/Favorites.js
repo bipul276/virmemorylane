@@ -1,7 +1,7 @@
 // src/pages/Favorites.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { API_BASE_URL } from '../config';
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
   const [error, setError] = useState("");
@@ -14,7 +14,7 @@ const Favorites = () => {
           setError("You need to log in to view favorites.");
           return;
         }
-        const res = await axios.get("http://localhost:5000/api/favorites", {
+        const res = await axios.get(`${API_BASE_URL}/api/favorites`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setFavorites(res.data);
@@ -33,7 +33,7 @@ const Favorites = () => {
         setError("You need to log in to delete favorites.");
         return;
       }
-      await axios.delete("http://localhost:5000/api/favorites", {
+      await axios.delete(`${API_BASE_URL}/api/favorites`, {
         headers: { Authorization: `Bearer ${token}` },
         data: {
           location: fav.location,
@@ -61,7 +61,7 @@ const Favorites = () => {
               <img
                 src={
                   fav.imageUrl.startsWith("uploads/")
-                    ? `http://localhost:5000/${fav.imageUrl}`
+                    ? `${API_BASE_URL}/${fav.imageUrl}`
                     : fav.imageUrl
                 }
                 alt="Favorite"
