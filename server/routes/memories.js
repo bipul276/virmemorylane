@@ -50,8 +50,9 @@ router.post("/", auth, upload.single("image"), async (req, res) => {
 router.get("/my", auth, async (req, res) => {
   try {
     const memories = await Memory.find({ owner: req.user.userId }).sort({ createdAt: -1 });
+    // If no memories, return an empty array instead of a 404.
     if (!memories || memories.length === 0) {
-      return res.status(404).json({ message: "No memories found" });
+      return res.json([]);
     }
     res.json(memories);
   } catch (error) {
@@ -59,6 +60,7 @@ router.get("/my", auth, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 // GET /api/memories - Fetch memories matching query parameters
 router.get("/", async (req, res) => {
